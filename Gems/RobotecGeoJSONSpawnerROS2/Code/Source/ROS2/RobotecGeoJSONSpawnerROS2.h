@@ -15,7 +15,7 @@
 #include <AzCore/Component/Component.h>
 #include <AzCore/RTTI/ReflectContext.h>
 #include <AzCore/RTTI/TypeInfoSimple.h>
-#include <ROS2/RobotControl/ControlSubscriptionHandler.h>
+#include <ROS2/Communication/TopicConfiguration.h>
 #include <RobotecGeoJSONSpawner/RobotecGeoJSONSpawnerBus.h>
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp/service.hpp>

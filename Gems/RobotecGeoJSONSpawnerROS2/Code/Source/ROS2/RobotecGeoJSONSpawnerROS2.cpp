@@ -13,6 +13,8 @@
 #include <AzCore/Component/Entity.h>
 #include <AzCore/Serialization/EditContext.h>
 #include <ROS2/Frame/ROS2FrameComponent.h>
+#include <ROS2/ROS2Bus.h>
+#include <ROS2/ROS2NamesBus.h>
 
 namespace RobotecGeoJSONSpawnerROS2
 {
@@ -120,8 +122,12 @@ namespace RobotecGeoJSONSpawnerROS2
 
         if (!m_spawnWithRawStringSubscription)
         {
-            const auto fullTopic = ROS2::ROS2Names::GetNamespacedName(
-                ros2Frame->GetNamespace(), m_configuration.m_spawnWithRawStringTopicConfiguration.m_topic);
+            AZStd::string fullTopic;
+            ROS2::ROS2NamesRequestBus::BroadcastResult(
+                fullTopic,
+                &ROS2::ROS2NamesRequestBus::Events::GetNamespacedName,
+                ros2Frame->GetNamespace(),
+                m_configuration.m_spawnWithRawStringTopicConfiguration.m_topic);
 
             m_spawnWithRawStringSubscription = ros2Node->create_subscription<StringMsg>(
                 fullTopic.data(),
@@ -134,8 +140,12 @@ namespace RobotecGeoJSONSpawnerROS2
 
         if (!m_spawnWithAssetPathSubscription)
         {
-            const auto fullTopic = ROS2::ROS2Names::GetNamespacedName(
-                ros2Frame->GetNamespace(), m_configuration.m_spawnWithAssetPathTopicConfiguration.m_topic);
+            AZStd::string fullTopic;
+            ROS2::ROS2NamesRequestBus::BroadcastResult(
+                fullTopic,
+                &ROS2::ROS2NamesRequestBus::Events::GetNamespacedName,
+                ros2Frame->GetNamespace(),
+                m_configuration.m_spawnWithAssetPathTopicConfiguration.m_topic);
 
             m_spawnWithAssetPathSubscription = ros2Node->create_subscription<StringMsg>(
                 fullTopic.data(),
@@ -148,8 +158,12 @@ namespace RobotecGeoJSONSpawnerROS2
 
         if (!m_modifySubscription)
         {
-            const auto fullTopic =
-                ROS2::ROS2Names::GetNamespacedName(ros2Frame->GetNamespace(), m_configuration.m_modifyTopicConfiguration.m_topic);
+            AZStd::string fullTopic;
+            ROS2::ROS2NamesRequestBus::BroadcastResult(
+                fullTopic,
+                &ROS2::ROS2NamesRequestBus::Events::GetNamespacedName,
+                ros2Frame->GetNamespace(),
+                m_configuration.m_modifyTopicConfiguration.m_topic);
 
             m_modifySubscription = ros2Node->create_subscription<StringMsg>(
                 fullTopic.data(),
@@ -162,8 +176,12 @@ namespace RobotecGeoJSONSpawnerROS2
 
         if (!m_deleteByIdSubscription)
         {
-            const auto fullTopic =
-                ROS2::ROS2Names::GetNamespacedName(ros2Frame->GetNamespace(), m_configuration.m_deleteByIdTopicConfiguration.m_topic);
+            AZStd::string fullTopic;
+            ROS2::ROS2NamesRequestBus::BroadcastResult(
+                fullTopic,
+                &ROS2::ROS2NamesRequestBus::Events::GetNamespacedName,
+                ros2Frame->GetNamespace(),
+                m_configuration.m_deleteByIdTopicConfiguration.m_topic);
 
             m_deleteByIdSubscription = ros2Node->create_subscription<Int32MultiArrayMsg>(
                 fullTopic.data(),
@@ -176,8 +194,12 @@ namespace RobotecGeoJSONSpawnerROS2
 
         if (!m_deleteAllSubscription)
         {
-            const auto fullTopic =
-                ROS2::ROS2Names::GetNamespacedName(ros2Frame->GetNamespace(), m_configuration.m_deleteAllTopicConfiguration.m_topic);
+            AZStd::string fullTopic;
+            ROS2::ROS2NamesRequestBus::BroadcastResult(
+                fullTopic,
+                &ROS2::ROS2NamesRequestBus::Events::GetNamespacedName,
+                ros2Frame->GetNamespace(),
+                m_configuration.m_deleteAllTopicConfiguration.m_topic);
 
             m_deleteAllSubscription = ros2Node->create_subscription<EmptyMsg>(
                 fullTopic.data(),
@@ -190,7 +212,12 @@ namespace RobotecGeoJSONSpawnerROS2
 
         if (!m_getIdsService)
         {
-            const auto fullTopic = ROS2::ROS2Names::GetNamespacedName(ros2Frame->GetNamespace(), m_configuration.m_getIdsServiceTopicName);
+            AZStd::string fullTopic;
+            ROS2::ROS2NamesRequestBus::BroadcastResult(
+                fullTopic,
+                &ROS2::ROS2NamesRequestBus::Events::GetNamespacedName,
+                ros2Frame->GetNamespace(),
+                m_configuration.m_getIdsServiceTopicName);
 
             m_getIdsService = ros2Node->create_service<std_srvs::srv::Trigger>(
                 m_configuration.m_getIdsServiceTopicName.data(),

@@ -50,9 +50,9 @@ ly_add_target(
         PUBLIC
             AZ::AzCore
             AZ::AzFramework
+            Gem::ROS2.API
         PRIVATE
             Gem::RobotecGeoJSONSpawner.API
-            Gem::ROS2.Static
 )
 
 # Here add ${gem_name} target, it depends on the Private Object library and Public API interface
@@ -74,7 +74,7 @@ ly_add_target(
             Gem::${gem_name}.Private.Object
 )
 
-target_depends_on_ros2_packages(${gem_name}.Private.Object std_msgs std_srvs)
+target_depends_on_ros2_packages(${gem_name}.Private.Object rclcpp std_msgs std_srvs)
 
 # Include the gem name into the Client Module source file
 # for use with the AZ_DECLARE_MODULE_CLASS macro
@@ -140,9 +140,11 @@ if(PAL_TRAIT_BUILD_HOST_TOOLS)
             PUBLIC
                 AZ::AzToolsFramework
                 ${gem_name}.Private.Object
-                Gem::ROS2.Editor.Static
+                Gem::ROS2.Editor.API
                 Gem::RobotecGeoJSONSpawner.API
     )
+
+    target_depends_on_ros2_packages(${gem_name}.Editor.Private.Object rclcpp std_msgs std_srvs)
 
     ly_add_target(
         NAME ${gem_name}.Editor GEM_MODULE
@@ -160,7 +162,7 @@ if(PAL_TRAIT_BUILD_HOST_TOOLS)
                 Gem::${gem_name}.Editor.API
             PRIVATE
                 Gem::${gem_name}.Editor.Private.Object
-                Gem::ROS2.Editor.Static
+                Gem::ROS2.Editor.API
                 Gem::RobotecGeoJSONSpawner.API
     )
 
